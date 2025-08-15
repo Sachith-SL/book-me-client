@@ -1,8 +1,34 @@
 .navbar-custom {
-  background-color: #fff0eb; /* light tomato background */
+  background-color: #ff6347; /* tomato red */
+  padding: 1rem 2rem;
 }
 
 .navbar-custom .navbar-brand {
-  color: #ff6347; /* tomato red */
+  color: white;
+  font-weight: bold;
+  font-size: 1.5rem;
+}
+
+.navbar-nav.booking-steps {
+  display: flex;
+  gap: 15px;
+}
+
+.step-link {
+  color: white;
+  font-weight: 500;
+  padding: 5px 10px;
+  border-radius: 6px;
+  transition: all 0.2s;
+}
+
+.step-link:hover {
+  background-color: #ffe5e0; /* light tomato hover */
+  color: #a10e18;
+}
+
+.active-step {
+  background-color: white;
+  color: #ff6347; /* tomato active step */
   font-weight: bold;
 }

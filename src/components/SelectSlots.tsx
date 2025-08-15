@@ -53,6 +53,7 @@ function SelectSlots() {
     <div className="select-slots-page">
       <div className="select-slots-card">
         <h2 className="select-slots-title">🕒 Select Available Slots</h2>
+        <h3 className="select-slots-title"> 05/09/2025</h3>
 
         <form onSubmit={handleSubmit} className="select-slots-form">
           <ul className="slots-list">

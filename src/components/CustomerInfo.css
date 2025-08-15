@@ -3,7 +3,8 @@
   align-items: center;
   justify-content: center;
   min-height: 100vh;
-  background-color: #fff0eb; /* light tomato background */
+  background-color: #fff0eb;
+  color: #ff6347; /* tomato red */ /* light tomato background */
 }
 
 .customer-info-card {
