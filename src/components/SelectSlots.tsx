@@ -43,6 +43,7 @@ function SelectSlots() {
     e.preventDefault();
     if (selectedSlots.length > 0) {
       alert(`Selected slots: ${selectedSlots.join(", ")}`);
+      setSelectedSlots([]);
     } else {
       alert("Please select at least one adjacent slot!");
     }
