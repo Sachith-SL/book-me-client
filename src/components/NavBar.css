@@ -1,0 +1,8 @@
+.navbar-custom {
+  background-color: #fff0eb; /* light tomato background */
+}
+
+.navbar-custom .navbar-brand {
+  color: #ff6347; /* tomato red */
+  font-weight: bold;
+}

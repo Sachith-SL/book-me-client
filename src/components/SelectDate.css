@@ -1,0 +1,64 @@
+.select-date-page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background-color: #fff0eb; /* light tomato background */
+}
+
+.select-date-card {
+  background-color: white;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.15);
+  width: 100%;
+  max-width: 500px;
+  text-align: center;
+}
+
+.select-date-title {
+  margin-bottom: 20px;
+  font-size: 1.6rem;
+  font-weight: bold;
+  color: #ff6347; /* tomato red */
+}
+
+.select-date-form {
+  display: flex;
+  gap: 10px;
+  flex-direction: column; /* stacked layout for better centering */
+  align-items: center;
+}
+
+.select-date-input {
+  width: 100%;
+  color: #ff6347;
+  border: 1px solid #ff6347;
+  border-radius: 6px;
+}
+
+.select-date-input:focus {
+  outline: none;
+  border-color: #e0523a;
+  box-shadow: 0 0 5px rgba(255, 99, 71, 0.5);
+}
+
+.select-date-button {
+  background-color: #ff6347;
+  border-color: #ff6347;
+  color: white;
+  font-weight: bold;
+  padding: 8px 16px;
+  border-radius: 6px;
+}
+
+.select-date-button:hover {
+  background-color: #e0523a;
+  border-color: #e0523a;
+}
+
+.select-date-result {
+  margin-top: 15px;
+  color: #e0523a;
+  font-weight: bold;
+}
