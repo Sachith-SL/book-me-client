@@ -2,14 +2,20 @@ import React, { useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import "./SelectDate.css";
+import { useNavigate } from "react-router-dom";
 
 function SelectDate() {
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
+  const navigate = useNavigate();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (selectedDate) {
       alert(`You selected: ${selectedDate.toDateString()}`);
+      
+    // Navigate to slots page with date
+    navigate("/slots", { state: { date: selectedDate.toISOString() } });
+
     } else {
       alert("Please select a date!");
     }

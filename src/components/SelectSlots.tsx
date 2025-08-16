@@ -1,8 +1,14 @@
 import React, { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./SelectSlots.css";
+import { useLocation } from "react-router-dom";
 
 function SelectSlots() {
+  const location = useLocation();
+  const selectedDate = location.state?.date
+    ? new Date(location.state.date)
+    : null;
+
   const availableSlots = [
     "09:00 AM",
     "10:00 AM",
@@ -53,7 +59,12 @@ function SelectSlots() {
     <div className="select-slots-page">
       <div className="select-slots-card">
         <h2 className="select-slots-title">🕒 Select Available Slots</h2>
-        <h3 className="select-slots-title"> 05/09/2025</h3>
+        <p className="selected-date">
+          Date:{" "}
+          {selectedDate instanceof Date
+            ? selectedDate.toLocaleDateString()
+            : selectedDate}
+        </p>
 
         <form onSubmit={handleSubmit} className="select-slots-form">
           <ul className="slots-list">
