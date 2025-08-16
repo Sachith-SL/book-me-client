@@ -3,44 +3,52 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./SelectSlots.css";
 import { useLocation } from "react-router-dom";
 
+interface TimeSlot {
+  id: number;
+  startTime: string;
+  endTime: string;
+  slotPrice: number;
+}
+
 function SelectSlots() {
   const location = useLocation();
   const selectedDate = location.state?.date
     ? new Date(location.state.date)
     : null;
 
-  const availableSlots = [
-    "09:00 AM",
-    "10:00 AM",
-    "11:00 AM",
-    "01:00 PM",
-    "02:00 PM",
-    "03:00 PM",
+  const availableSlots: TimeSlot[] = [
+    { id: 11, startTime: "09:00 AM", endTime: "10:00 AM", slotPrice: 1000 },
+    { id: 2, startTime: "10:00 AM", endTime: "11:00 AM", slotPrice: 1000 },
+    { id: 13, startTime: "11:00 AM", endTime: "12:00 PM", slotPrice: 1200 },
+    { id: 5, startTime: "01:00 PM", endTime: "02:00 PM", slotPrice: 1000 },
+    { id: 7, startTime: "02:00 PM", endTime: "03:00 PM", slotPrice: 1200 },
+    { id: 8, startTime: "03:00 PM", endTime: "04:00 PM", slotPrice: 1500 },
   ];
 
-  const [selectedSlots, setSelectedSlots] = useState<string[]>([]);
+  const [selectedSlots, setSelectedSlots] = useState<number[]>([]);
 
-  const toggleSlot = (slot: string) => {
-    const slotIndex = availableSlots.indexOf(slot);
+  const toggleSlot = (slotId: number) => {
+    const clickedIndex = availableSlots.findIndex((slot) => slot.id === slotId);
 
-    if (selectedSlots.length === 0) {
-      // First slot selection
-      setSelectedSlots([slot]);
+    if (selectedSlots.includes(slotId)) {
+      // Allow deselect
+      setSelectedSlots(selectedSlots.filter((id) => id !== slotId));
     } else {
-      const selectedIndexes = selectedSlots.map((s) =>
-        availableSlots.indexOf(s)
-      );
-      const minIndex = Math.min(...selectedIndexes);
-      const maxIndex = Math.max(...selectedIndexes);
+      if (selectedSlots.length === 0) {
+        setSelectedSlots([slotId]);
+      } else {
+        const selectedIndexes = selectedSlots.map((id) =>
+          availableSlots.findIndex((slot) => slot.id === id)
+        );
+        const minIndex = Math.min(...selectedIndexes);
+        const maxIndex = Math.max(...selectedIndexes);
 
-      if (
-        slotIndex === minIndex - 1 || // Adjacent before
-        slotIndex === maxIndex + 1 // Adjacent after
-      ) {
-        setSelectedSlots([...selectedSlots, slot]);
-      } else if (selectedSlots.includes(slot)) {
-        // Allow deselect
-        setSelectedSlots(selectedSlots.filter((s) => s !== slot));
+        if (clickedIndex === minIndex - 1 || clickedIndex === maxIndex + 1) {
+          // Allow only if adjacent in the array order
+          setSelectedSlots([...selectedSlots, slotId]);
+        } else {
+          alert("You can only select adjacent slots.");
+        }
       }
     }
   };
@@ -48,10 +56,15 @@ function SelectSlots() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (selectedSlots.length > 0) {
-      alert(`Selected slots: ${selectedSlots.join(", ")}`);
-      setSelectedSlots([]);
+      const selectedSlotDetails = availableSlots
+        .filter((slot) => selectedSlots.includes(slot.id))
+        .map((slot) => `${slot.startTime} - ${slot.endTime}`)
+        .join(", ");
+
+      alert(`Selected slots: ${selectedSlotDetails}`);
+      setSelectedSlots([]); // clear after submit
     } else {
-      alert("Please select at least one adjacent slot!");
+      alert("Please select at least one slot!");
     }
   };
 
@@ -70,13 +83,13 @@ function SelectSlots() {
           <ul className="slots-list">
             {availableSlots.map((slot) => (
               <li
-                key={slot}
+                key={slot.id}
                 className={`slot-item ${
-                  selectedSlots.includes(slot) ? "selected" : ""
+                  selectedSlots.includes(slot.id) ? "selected" : ""
                 }`}
-                onClick={() => toggleSlot(slot)}
+                onClick={() => toggleSlot(slot.id)}
               >
-                {slot}
+                {slot.startTime} - {slot.endTime} | Rs. {slot.slotPrice}
               </li>
             ))}
           </ul>
