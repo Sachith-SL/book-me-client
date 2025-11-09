@@ -30,7 +30,7 @@ const router = createBrowserRouter([
       {
         path: "/confirm",
         element: (
-          <BookingConfirmation date={""} slots={[]} name={""} phone={""} />
+          <BookingConfirmation />
         ),
       },
     ],

@@ -14,7 +14,8 @@ function SelectDate() {
       alert(`You selected: ${selectedDate.toDateString()}`);
       
     // Navigate to slots page with date
-    navigate("/slots", { state: { date: selectedDate.toISOString() } });
+    const formattedDate = selectedDate;
+    navigate("/slots", { state: { date: formattedDate } });
 
     } else {
       alert("Please select a date!");

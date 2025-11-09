@@ -1,29 +1,22 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./SelectSlots.css";
-import { useLocation } from "react-router-dom";
-
-interface TimeSlot {
-  id: number;
-  startTime: string;
-  endTime: string;
-  slotPrice: number;
-}
+import { useLocation, useNavigate } from "react-router-dom";
+import { getTimeSlotsByDate } from "../services/timeSlotService";
+import type { TimeSlot } from "../types/TimeSlot";
 
 function SelectSlots() {
+  const navigate = useNavigate();
   const location = useLocation();
+  const [availableSlots, setSlots] = useState<TimeSlot[]>([]);
   const selectedDate = location.state?.date
-    ? new Date(location.state.date)
+    ? new Date(location.state.date).toLocaleDateString('en-CA').split("T")[0]
     : null;
 
-  const availableSlots: TimeSlot[] = [
-    { id: 11, startTime: "09:00 AM", endTime: "10:00 AM", slotPrice: 1000 },
-    { id: 2, startTime: "10:00 AM", endTime: "11:00 AM", slotPrice: 1000 },
-    { id: 13, startTime: "11:00 AM", endTime: "12:00 PM", slotPrice: 1200 },
-    { id: 5, startTime: "01:00 PM", endTime: "02:00 PM", slotPrice: 1000 },
-    { id: 7, startTime: "02:00 PM", endTime: "03:00 PM", slotPrice: 1200 },
-    { id: 8, startTime: "03:00 PM", endTime: "04:00 PM", slotPrice: 1500 },
-  ];
+  useEffect(() => {
+    if (!selectedDate) return;
+    getTimeSlotsByDate(selectedDate).then(setSlots).catch(console.error);
+  }, [selectedDate]);
 
   const [selectedSlots, setSelectedSlots] = useState<number[]>([]);
 
@@ -58,11 +51,22 @@ function SelectSlots() {
     if (selectedSlots.length > 0) {
       const selectedSlotDetails = availableSlots
         .filter((slot) => selectedSlots.includes(slot.id))
-        .map((slot) => `${slot.startTime} - ${slot.endTime}`)
-        .join(", ");
+        .map((slot) => ({
+          id: slot.id,
+          date: slot.date,
+          startTime: slot.startTime,
+          endTime: slot.endTime,
+          slotPrice: slot.slotPrice,
+          availabilityStatus: slot.availabilityStatus,
+          description: slot.description,
+        }));
+
 
       alert(`Selected slots: ${selectedSlotDetails}`);
       setSelectedSlots([]); // clear after submit
+      navigate("/info", {
+        state: { date: selectedDate, slots: selectedSlotDetails },
+      });
     } else {
       alert("Please select at least one slot!");
     }
@@ -72,12 +76,7 @@ function SelectSlots() {
     <div className="select-slots-page">
       <div className="select-slots-card">
         <h2 className="select-slots-title">🕒 Select Available Slots</h2>
-        <p className="selected-date">
-          Date:{" "}
-          {selectedDate instanceof Date
-            ? selectedDate.toLocaleDateString()
-            : selectedDate}
-        </p>
+        <p className="selected-date">{selectedDate}</p>
 
         <form onSubmit={handleSubmit} className="select-slots-form">
           <ul className="slots-list">

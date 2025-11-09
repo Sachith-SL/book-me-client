@@ -1,8 +1,14 @@
 import React, { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./CustomerInfo.css";
+import { useLocation, useNavigate } from "react-router-dom";
+import type { TimeSlot } from "../types/TimeSlot";
 
 function CustomerInfo() {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const selectedDate = location.state?.date ? location.state.date : null;
+  const selectedSlots = location.state?.slots ? location.state.slots : null;
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
 
@@ -13,7 +19,14 @@ function CustomerInfo() {
       alert("Please fill in all fields");
       return;
     }
-
+    navigate("/confirm", {
+      state: {
+        date: selectedDate,
+        slots: selectedSlots,
+        name: name,
+        phone: phone,
+      },
+    });
     alert(`Name: ${name}\nPhone: ${phone}`);
   };
 
@@ -21,6 +34,19 @@ function CustomerInfo() {
     <div className="customer-info-page">
       <div className="customer-info-card">
         <h2 className="customer-info-title">📋 Customer Information</h2>
+        <p className="selected-date">
+          Date:{" "}
+          {selectedDate instanceof Date
+            ? selectedDate.toLocaleDateString()
+            : selectedDate}
+        </p>
+        <ul className="slot-list">
+          {selectedSlots.map((slot:TimeSlot) => (
+            <li key={slot.id}>
+              {slot.id}-{slot.startTime} - {slot.endTime} (Rs {slot.slotPrice}.00)
+            </li>
+          ))}
+        </ul>
 
         <form onSubmit={handleSubmit} className="customer-info-form">
           <div className="mb-3 w-100">
