@@ -27,13 +27,13 @@ function CustomerInfo() {
         phone: phone,
       },
     });
-    alert(`Name: ${name}\nPhone: ${phone}`);
+
   };
 
   return (
-    <div className="customer-info-page">
-      <div className="customer-info-card">
-        <h2 className="customer-info-title">📋 Customer Information</h2>
+    <div className="bm-page">
+      <div className="bm-card">
+        <h2 className="bm-title">📋 Customer Information</h2>
         <p className="selected-date">
           Date:{" "}
           {selectedDate instanceof Date
@@ -71,7 +71,7 @@ function CustomerInfo() {
             />
           </div>
 
-          <button type="submit" className="btn customer-submit">
+          <button type="submit" className="btn">
             Submit
           </button>
         </form>

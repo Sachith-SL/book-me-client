@@ -5,12 +5,12 @@ function ErrorPage() {
   const navigate = useNavigate();
 
   return (
-    <div className="error-page">
-      <div className="error-card">
+    <div className="bm-page">
+      <div className="bm-card">
         <h1 className="error-code">404</h1>
         <p className="error-message">Oops! Page Not Found</p>
         <button
-          className="btn error-home-btn"
+          className="btn"
           onClick={() => navigate("/")}
         >
           Go Home

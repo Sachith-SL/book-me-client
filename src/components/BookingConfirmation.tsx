@@ -60,9 +60,9 @@ function BookingConfirmation() {
   };
 
   return (
-    <div className="booking-confirmation-page">
-      <div className="booking-confirmation-card">
-        <h2 className="booking-confirmation-title">✅ Booking Confirmation</h2>
+    <div className="bm-page">
+      <div className="bm-card">
+        <h2 className="bm-title">✅ Booking Confirmation</h2>
 
         <div className="booking-details">
           <p>
@@ -72,8 +72,7 @@ function BookingConfirmation() {
             <ul className="slots-list">
               {slots.map((slot: TimeSlot) => (
                 <li key={slot.id}>
-                  {slot.startTime} - {slot.endTime} (Rs{" "}
-                  {slot.slotPrice}.00)
+                  {slot.startTime} - {slot.endTime} (Rs {slot.slotPrice}.00)
                 </li>
               ))}
             </ul>
@@ -84,28 +83,31 @@ function BookingConfirmation() {
 
           <div className="btn btn-outline-tomato">
             <h3>Select Sport Type</h3>
+            <div className="label">
+              <label className="custom-checkbox">
+                <input
+                  type="checkbox"
+                  value="Cricket"
+                  checked={sportType === "Cricket"}
+                  onChange={handleCheckboxChange}
+                />
+                <span className="checkmark"></span>
+                Cricket
+              </label>
 
-            <label>
-              <input
-                type="checkbox"
-                value="Cricket"
-                checked={sportType === "Cricket"}
-                onChange={handleCheckboxChange}
-              />
-              Cricket
-            </label>
+              <br />
 
-            <br />
-
-            <label>
-              <input
-                type="checkbox"
-                value="Futsal"
-                checked={sportType === "Futsal"}
-                onChange={handleCheckboxChange}
-              />
-              Futsal
-            </label>
+              <label className="custom-checkbox">
+                <input
+                  type="checkbox"
+                  value="Futsal"
+                  checked={sportType === "Futsal"}
+                  onChange={handleCheckboxChange}
+                />
+                <span className="checkmark"></span>
+                Futsal
+              </label>
+            </div>
 
             <p>Selected Sport: {sportType || "None"}</p>
           </div>

@@ -10,7 +10,7 @@ function SelectSlots() {
   const location = useLocation();
   const [availableSlots, setSlots] = useState<TimeSlot[]>([]);
   const selectedDate = location.state?.date
-    ? new Date(location.state.date).toLocaleDateString('en-CA').split("T")[0]
+    ? new Date(location.state.date).toLocaleDateString("en-CA").split("T")[0]
     : null;
 
   useEffect(() => {
@@ -61,8 +61,6 @@ function SelectSlots() {
           description: slot.description,
         }));
 
-
-      alert(`Selected slots: ${selectedSlotDetails}`);
       setSelectedSlots([]); // clear after submit
       navigate("/info", {
         state: { date: selectedDate, slots: selectedSlotDetails },
@@ -73,12 +71,12 @@ function SelectSlots() {
   };
 
   return (
-    <div className="select-slots-page">
-      <div className="select-slots-card">
-        <h2 className="select-slots-title">🕒 Select Available Slots</h2>
+    <div className="bm-page">
+      <div className="bm-card">
+        <h2 className="bm-title">🕒 Select Available Slots</h2>
         <p className="selected-date">{selectedDate}</p>
 
-        <form onSubmit={handleSubmit} className="select-slots-form">
+        <form onSubmit={handleSubmit} className="form">
           <ul className="slots-list">
             {availableSlots.map((slot) => (
               <li
@@ -93,7 +91,7 @@ function SelectSlots() {
             ))}
           </ul>
 
-          <button type="submit" className="btn select-slots-submit">
+          <button type="submit" className="btn">
             Submit
           </button>
         </form>

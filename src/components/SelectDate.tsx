@@ -11,23 +11,20 @@ function SelectDate() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (selectedDate) {
-      alert(`You selected: ${selectedDate.toDateString()}`);
-      
-    // Navigate to slots page with date
-    const formattedDate = selectedDate;
-    navigate("/slots", { state: { date: formattedDate } });
-
+      // Navigate to slots page with date
+      const formattedDate = selectedDate;
+      navigate("/slots", { state: { date: formattedDate } });
     } else {
       alert("Please select a date!");
     }
   };
 
   return (
-    <div className="select-date-page">
-      <div className="select-date-card">
-        <h2 className="select-date-title">📅 Select a Date</h2>
+    <div className="bm-page">
+      <div className="bm-card">
+        <h2 className="bm-title">📅 Select a Date</h2>
 
-        <form onSubmit={handleSubmit} className="select-date-form">
+        <form onSubmit={handleSubmit} className="bm-form">
           <DatePicker
             selected={selectedDate}
             onChange={(date: Date | null) => setSelectedDate(date)}
